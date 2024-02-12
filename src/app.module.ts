@@ -17,27 +17,21 @@ import { ResourceModule } from './Core/Resources/resource.module';
       password: '123',
       ///port: 3000,
       database: 'lms_test',
-      schema:"public",  
-      autoLoadModels:true,
+      schema: 'public',
+      autoLoadModels: true,
       // models:[User,University,Student,Resource,Course,CourseSpecialization],
-      sync:{alter:true},
+      sync: { alter: true },
 
       // synchronize:true,
-      
     }),
-    UserModule
-,StudentModule,
-CourseModule,
-UniversityModule,
-CourseSpecializationModule,
-ResourceModule
-
-// UniversityModule
+    UserModule,
+    StudentModule,
+    CourseModule,
+    UniversityModule,
+    CourseSpecializationModule,
+    ResourceModule,
   ],
-  controllers: [
-  ],
-  providers: [
-
-  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -27,14 +27,14 @@ export class UserController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: User): Promise<User> {
-    await this.findById(id); // Check if user exists
+    await this.findById(id); 
     await this.userService.update(id, updateUserDto);
     return this.findById(id);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<void> {
-    await this.findById(id); // Check if user exists
+    await this.findById(id); 
     await this.userService.delete(id);
   }
 }
