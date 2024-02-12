@@ -27,13 +27,13 @@ export class CourseSpecializationController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateSpecializationDto: CourseSpecialization): Promise<CourseSpecialization> {
-    await this.findById(id); // Check if specialization exists
+    await this.findById(id); 
     return this.courseSpecializationService.update(id, updateSpecializationDto);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<void> {
-    await this.findById(id); // Check if specialization exists
+    await this.findById(id); 
     await this.courseSpecializationService.delete(id);
   }
 }

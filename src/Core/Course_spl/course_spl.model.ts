@@ -1,5 +1,8 @@
-import { Table, Column, Model,ForeignKey,HasOne } from 'sequelize-typescript';
+import { Table, Column, Model,ForeignKey,HasOne, BelongsTo } from 'sequelize-typescript';
+import { University } from '../University/university.model';
 
+/* The CourseSpecialization class represents a specialization within a university course, with
+properties for name, description, university ID, and a reference to the university it belongs to. */
 @Table
 export class CourseSpecialization extends Model {
   @Column
@@ -8,10 +11,10 @@ export class CourseSpecialization extends Model {
   @Column
   description: string;
 
-  @ForeignKey(() => CourseSpecialization)
-  @Column
-  specializationId: string;
+  @ForeignKey(()=> University)
+  University_id:string
 
-  @HasOne(() => CourseSpecialization)
-  specialization: CourseSpecialization;
+  @BelongsTo(()=>University)
+  University:University
+  
 }

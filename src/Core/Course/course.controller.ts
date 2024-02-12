@@ -27,13 +27,13 @@ export class CourseController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateCourseDto: Course): Promise<Course> {
-    await this.findById(id); // Check if course exists
+    await this.findById(id); 
     return this.courseService.update(id, updateCourseDto);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<void> {
-    await this.findById(id); // Check if course exists
+    await this.findById(id); 
     await this.courseService.delete(id);
   }
 }

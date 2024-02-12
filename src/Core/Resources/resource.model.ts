@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Course } from '../Course/course.model';
 
 @Table
@@ -9,10 +9,13 @@ export class Resource extends Model {
   @Column
   file: string;
 
-  @ForeignKey(() => Course)
-  @Column
-  courseId: string;
-
   @Column
   is_published: boolean;
+
+  @ForeignKey(()=>Course)
+  courseId: string;
+
+  @BelongsTo(()=>Course)
+  Course:Course;
+
 }

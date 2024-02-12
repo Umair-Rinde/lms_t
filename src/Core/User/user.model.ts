@@ -1,9 +1,11 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey } from 'sequelize-typescript';
 import { Gender } from '../enum/gender.enum';
 import { DataType } from 'sequelize-typescript';
 @Table
 export class User extends Model {
-  @Column
+  
+  @PrimaryKey
+  @Column({allowNull:false})
   id: string;
 
   @Column
@@ -14,8 +16,10 @@ export class User extends Model {
 
   @Column
   password: string;
+  
   @Column
   phone: number;
+
   @Column(DataType.ENUM('male', 'female'))
   gender: Gender;
 }
