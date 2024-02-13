@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, HasMany, BelongsToMany } from 'sequelize-typescript';
 import { Resource } from '../Resources/resource.model';
 
 @Table
@@ -12,7 +12,6 @@ export class Course extends Model {
   @Column
   price: number;
 
-  
   @Column
   course_id: string;
 
@@ -22,4 +21,7 @@ export class Course extends Model {
 
   @HasMany(()=>Resource)
   resource: Resource
+  
+
+
 }

@@ -7,6 +7,8 @@ import { StudentModule } from './Core/Student/student.module';
 import { CourseModule } from './Core/Course/course.module';
 import { CourseSpecializationModule } from './Core/Course_spl/course_spl.mdoule';
 import { ResourceModule } from './Core/Resources/resource.module';
+import { CategoryModule } from './Core/Category/category.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -15,7 +17,7 @@ import { ResourceModule } from './Core/Resources/resource.module';
       host: 'localhost',
       username: 'postgres',
       password: '123',
-      ///port: 3000,
+      port: 5432,
       database: 'lms_test',
       schema: 'public',
       autoLoadModels: true,
@@ -30,6 +32,7 @@ import { ResourceModule } from './Core/Resources/resource.module';
     UniversityModule,
     CourseSpecializationModule,
     ResourceModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
