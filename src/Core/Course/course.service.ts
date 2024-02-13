@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Course } from './course.model';
+import { Resource } from '../Resources/resource.model';
 
 @Injectable()
 export class CourseService {
@@ -9,6 +10,9 @@ export class CourseService {
     private readonly courseModel: typeof Course,
   ) {}
 
+  async findcourse(){
+    return this.courseModel.findAll({include:[Resource]})
+  }
   async findAll(): Promise<Course[]> {
     return this.courseModel.findAll();
   }

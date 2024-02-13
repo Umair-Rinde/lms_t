@@ -7,8 +7,8 @@ export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Get()
-  async findAll(): Promise<Course[]> {
-    return this.courseService.findAll();
+  async findcourse(): Promise<Course[]> {
+    return this.courseService.findcourse();
   }
 
   @Get(':id')

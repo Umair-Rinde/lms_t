@@ -1,14 +1,24 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { CourseSpecializationService } from './course_spl.service';
 import { CourseSpecialization } from './course_spl.model';
 
 @Controller('course-specializations')
 export class CourseSpecializationController {
-  constructor(private readonly courseSpecializationService: CourseSpecializationService) {}
+  constructor(
+    private readonly courseSpecializationService: CourseSpecializationService,
+  ) {}
 
   @Get()
-  findAll(): Promise<CourseSpecialization[]> {
-    return this.courseSpecializationService.findAll();
+  findCourse_spl(): Promise<CourseSpecialization[]> {
+    return this.courseSpecializationService.findCOurse_spl();
   }
 
   @Get(':id')
@@ -17,12 +27,17 @@ export class CourseSpecializationController {
   }
 
   @Post()
-  create(@Body() createSpecializationDto: Partial<CourseSpecialization>): Promise<CourseSpecialization> {
+  create(
+    @Body() createSpecializationDto: Partial<CourseSpecialization>,
+  ): Promise<CourseSpecialization> {
     return this.courseSpecializationService.create(createSpecializationDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSpecializationDto: CourseSpecialization): Promise<CourseSpecialization> {
+  update(
+    @Param('id') id: string,
+    @Body() updateSpecializationDto: CourseSpecialization,
+  ): Promise<CourseSpecialization> {
     return this.courseSpecializationService.update(id, updateSpecializationDto);
   }
 
@@ -32,7 +47,36 @@ export class CourseSpecializationController {
   }
 
   @Post(':id/add-category/:categoryId')
-  addCategoryToSpecialization(@Param('id') id: string, @Param('categoryId') categoryId: string): Promise<CourseSpecialization | null> {
-    return this.courseSpecializationService.addCategoryToSpecialization(id, categoryId);
+  addCategoryToSpecialization(
+    @Param('id') id: string,
+    @Param('categoryId') categoryId: string,
+  ): Promise<CourseSpecialization | null> {
+    return this.courseSpecializationService.addCategoryToSpecialization(
+      id,
+      categoryId,
+    );
+  }
+  @Delete(':id/delete-category/:categoryId')
+  async deleteCategoryFromSpecialization(
+    @Param('id') specializationId: string,
+    @Param('categoryId') categoryId: string,
+  ): Promise<void> {
+    await this.courseSpecializationService.deleteCategory(
+      specializationId,
+      categoryId,
+    );
+  }
+
+  @Put(':id/update-category/:oldCategoryId/:newCategoryId')
+  async updateCategoryInSpecialization(
+    @Param('id') specializationId: string,
+    @Param('oldCategoryId') oldCategoryId: string,
+    @Param('newCategoryId') newCategoryId: string,
+  ): Promise<void> {
+    await this.courseSpecializationService.updateCategory(
+      specializationId,
+      oldCategoryId,
+      newCategoryId,
+    );
   }
 }
