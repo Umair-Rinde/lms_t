@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
 import { CourseSpecializationService } from './course_spl.service';
 import { CourseSpecialization } from './course_spl.model';
 
@@ -7,33 +7,32 @@ export class CourseSpecializationController {
   constructor(private readonly courseSpecializationService: CourseSpecializationService) {}
 
   @Get()
-  async findAll(): Promise<CourseSpecialization[]> {
+  findAll(): Promise<CourseSpecialization[]> {
     return this.courseSpecializationService.findAll();
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<CourseSpecialization> {
-    const specialization = await this.courseSpecializationService.findById(id);
-    if (!specialization) {
-      throw new NotFoundException('Course Specialization not found');
-    }
-    return specialization;
+  findById(@Param('id') id: string): Promise<CourseSpecialization | null> {
+    return this.courseSpecializationService.findById(id);
   }
 
   @Post()
-  async create(@Body() createSpecializationDto: CourseSpecialization): Promise<CourseSpecialization> {
+  create(@Body() createSpecializationDto: Partial<CourseSpecialization>): Promise<CourseSpecialization> {
     return this.courseSpecializationService.create(createSpecializationDto);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateSpecializationDto: CourseSpecialization): Promise<CourseSpecialization> {
-    await this.findById(id); 
+  update(@Param('id') id: string, @Body() updateSpecializationDto: CourseSpecialization): Promise<CourseSpecialization> {
     return this.courseSpecializationService.update(id, updateSpecializationDto);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<void> {
-    await this.findById(id); 
-    await this.courseSpecializationService.delete(id);
+  delete(@Param('id') id: string): Promise<void> {
+    return this.courseSpecializationService.delete(id);
+  }
+
+  @Post(':id/add-category/:categoryId')
+  addCategoryToSpecialization(@Param('id') id: string, @Param('categoryId') categoryId: string): Promise<CourseSpecialization | null> {
+    return this.courseSpecializationService.addCategoryToSpecialization(id, categoryId);
   }
 }

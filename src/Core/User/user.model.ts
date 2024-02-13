@@ -1,7 +1,11 @@
 import { Table, Column, Model, PrimaryKey } from 'sequelize-typescript';
 import { Gender } from '../enum/gender.enum';
 import { DataType } from 'sequelize-typescript';
-@Table
+import { spec } from 'node:test/reporters';
+@Table({
+  modelName:"User",
+  tableName:"users"
+})
 export class User extends Model {
   
   @PrimaryKey
@@ -23,3 +27,4 @@ export class User extends Model {
   @Column(DataType.ENUM('male', 'female'))
   gender: Gender;
 }
+
