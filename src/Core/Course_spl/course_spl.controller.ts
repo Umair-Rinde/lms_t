@@ -48,6 +48,7 @@ export class CourseSpecializationController {
   delete(@Param('id') id: string): Promise<void> {
     return this.courseSpecializationService.delete(id);
   }
+
   @Post(':id/add-categories')
   async addCategoriesToSpecialization(
     @Param('id') specializationId: string,
@@ -61,7 +62,6 @@ export class CourseSpecializationController {
     return { specialization };
   }
 
-  
   @Delete(':id/delete-category/:categoryId')
   async deleteCategoryFromSpecialization(
     @Param('id') specializationId: string,
@@ -79,7 +79,7 @@ async updateCategoryInSpecialization(
   @Body() body: { newCategoryId: string[] },
 ): Promise<void> {
   const { newCategoryId } = body;
-  await this.courseSpecializationService.updateCategory(
+  await this.courseSpecializationService.addCategoryToSpecialization(
     specializationId,
     newCategoryId,
   );
