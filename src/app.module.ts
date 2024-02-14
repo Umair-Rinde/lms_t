@@ -21,10 +21,7 @@ import { CategoryModule } from './Core/Category/category.module';
       database: 'lms_test',
       schema: 'public',
       autoLoadModels: true,
-      // models:[User,University,Student,Resource,Course,CourseSpecialization],
       sync: { alter: true },
-
-      // synchronize:true,
     }),
     UserModule,
     StudentModule,

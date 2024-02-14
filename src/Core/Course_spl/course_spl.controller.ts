@@ -48,17 +48,20 @@ export class CourseSpecializationController {
   delete(@Param('id') id: string): Promise<void> {
     return this.courseSpecializationService.delete(id);
   }
-
-  @Post(':id/add-category/:categoryId')
-  addCategoryToSpecialization(
-    @Param('id') id: string,
-    @Param('categoryId') categoryId: string,
-  ): Promise<CourseSpecialization | null> {
-    return this.courseSpecializationService.addCategoryToSpecialization(
-      id,
-      categoryId,
-    );
+  @Post(':id/add-categories')
+  async addCategoriesToSpecialization(
+    @Param('id') specializationId: string,
+    @Body() body: { categoryIds: string[] },
+  ) {
+    const { categoryIds } = body;
+    const specialization = await this.courseSpecializationService.addCategoryToSpecialization(specializationId, categoryIds);
+    if (!specialization) {
+      return { message: 'Failed to add categories to specialization' };
+    }
+    return { specialization };
   }
+
+  
   @Delete(':id/delete-category/:categoryId')
   async deleteCategoryFromSpecialization(
     @Param('id') specializationId: string,
@@ -70,18 +73,17 @@ export class CourseSpecializationController {
     );
   }
 
-  @Put(':id/update-category/:oldCategoryId/:newCategoryId')
-  async updateCategoryInSpecialization(
-    @Param('id') specializationId: string,
-    @Param('oldCategoryId') oldCategoryId: string,
-    @Param('newCategoryId') newCategoryId: string,
-  ): Promise<void> {
-    await this.courseSpecializationService.updateCategory(
-      specializationId,
-      oldCategoryId,
-      newCategoryId,
-    );
-  }
+  @Put(':id/update-category/updateCategory')
+async updateCategoryInSpecialization(
+  @Param('id') specializationId: string,
+  @Body() body: { newCategoryId: string[] },
+): Promise<void> {
+  const { newCategoryId } = body;
+  await this.courseSpecializationService.updateCategory(
+    specializationId,
+    newCategoryId,
+  );
+}
 
   @Post('upload-course')
   @UseInterceptors(FilesInterceptor('courseFile'))

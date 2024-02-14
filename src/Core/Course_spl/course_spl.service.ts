@@ -16,21 +16,23 @@ export class CourseSpecializationService {
     private readonly courseCategoryModel: typeof Coursecategory,
   ) {}
 
-  async findCOurse_spl(): Promise<CourseSpecialization[]> {
+
+
+async findCOurse_spl(): Promise<CourseSpecialization[]> {
     return this.courseSpecializationModel.findAll({include:[University,Category],});
   }
 
-  async findById(id: string): Promise<CourseSpecialization | null> {
+async findById(id: string): Promise<CourseSpecialization | null> {
     return this.courseSpecializationModel.findByPk(id);
   }
 
-  async create(
+async create(
     createSpecializationDto: Partial<CourseSpecialization>,
   ): Promise<CourseSpecialization> {
     return this.courseSpecializationModel.create(createSpecializationDto);
   }
 
-  async update(
+async update(
     id: string,
     updateSpecializationDto: CourseSpecialization,
   ): Promise<CourseSpecialization> {
@@ -40,42 +42,51 @@ export class CourseSpecializationService {
     return this.findById(id);
   }
 
-  async delete(id: string): Promise<void> {
+async delete(id: string): Promise<void> {
     await this.courseSpecializationModel.destroy({
       where: { id },
     });
   }
 
-  async addCategoryToSpecialization(
+async addCategoryToSpecialization(
     specializationId: string,
-    categoryId: string,
+    categoryId: string[],
   ): Promise<CourseSpecialization | null> {
     try {
       const specialization =
         await this.courseSpecializationModel.findByPk(specializationId);
+      
       if (!specialization) {
         console.log('Course specialization not found!');
         return null;
       }
-      const category = await this.categoryModel.findByPk(categoryId);
-      if (!category) {
-        console.log('Category not found!');
-        return null;
-      }
+      
+      for (const categoryID_ of categoryId ) {
+        const category = await this.categoryModel.findByPk(categoryID_);
+        
+        if (!category) {
+          console.log('Category not found!');
+          return null;
+        }  
+      
       const existingCategory = await specialization.$get('courses_category', {
-        where: { id: categoryId },
+        where: { id: categoryID_ },
       });
+      
       if (existingCategory.length > 0) {
         console.log('Category already exists in CourseSpecialization!');
-        return specialization;
+        continue
       }
 
       await specialization.$add('courses_category', category);
       console.log(
         `>> added Category id=${category.id} to CourseSpecialization id=${specialization.id}`,
       );
+    }
       return specialization;
-    } catch (err) {
+    } 
+    
+    catch (err) {
       console.log(
         '>> Error while adding Category to CourseSpecialization: ',
         err,
@@ -84,7 +95,7 @@ export class CourseSpecializationService {
     }
   }
 
-  async deleteCategory(
+async deleteCategory(
     specializationId: string,
     categoryId: string,
   ): Promise<void> {
@@ -103,10 +114,9 @@ export class CourseSpecializationService {
     await specialization.$remove('course_category', category);
   }
 
-  async updateCategory(
+async updateCategory(
     specializationId: string,
-    oldId: string,
-    updateId: string,
+    updateId: string[],
   ): Promise<void> {
     const specialization =
       await this.courseSpecializationModel.findByPk(specializationId);
@@ -114,20 +124,8 @@ export class CourseSpecializationService {
       console.log('Course specialization not found!');
       return null;
     }
-
-    const category = await this.categoryModel.findByPk(updateId);
-    if (!category) {
-      console.log('Category not found!');
-      return null;
-    }
-
-    const oldCategory = await this.categoryModel.findByPk(updateId);
-    if (!oldCategory) {
-      console.log('Category not found!');
-      return null;
-    }
-    await specialization.$remove('course_category', oldCategory);
-    await specialization.$add('course_category', category);
+    this.addCategoryToSpecialization(specializationId,updateId)
   }
-
 }
+    
+
