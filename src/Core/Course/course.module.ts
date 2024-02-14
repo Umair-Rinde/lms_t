@@ -7,7 +7,7 @@ import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [SequelizeModule.forFeature([Course]), MulterModule.register({
-    dest:".\src\Core\Course\Files"
+    dest:"src/Core/Course/files"
   })],
   controllers: [CourseController],
   providers: [CourseService],

@@ -9,7 +9,7 @@ import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [SequelizeModule.forFeature([CourseSpecialization,Category,Coursecategory]),MulterModule.register({
-    dest:"\splFiles"
+    dest:"src/Core/Course_spl/splFiles"
   })],
   controllers: [CourseSpecializationController],
   providers: [CourseSpecializationService],
