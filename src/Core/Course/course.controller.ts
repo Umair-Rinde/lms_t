@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { Course } from './course.model';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('courses')
 export class CourseController {
@@ -35,5 +36,14 @@ export class CourseController {
   async delete(@Param('id') id: string): Promise<void> {
     await this.findById(id); 
     await this.courseService.delete(id);
+  }
+
+  @Post('upload-course')
+  @UseInterceptors(FileInterceptor('courseFile'))
+  courseAdd(@UploadedFile() courseFile:Express.Multer.File):object{
+    console.log(courseFile)
+    return{
+      message:"File uploaded sucessfully"
+    }
   }
 }

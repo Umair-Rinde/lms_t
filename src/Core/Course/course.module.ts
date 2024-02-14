@@ -3,9 +3,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { CourseController } from './course.controller';
 import { CourseService } from './course.service';
 import { Course } from './course.model';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Course])],
+  imports: [SequelizeModule.forFeature([Course]), MulterModule.register({
+    dest:".\src\Core\Course\Files"
+  })],
   controllers: [CourseController],
   providers: [CourseService],
 })

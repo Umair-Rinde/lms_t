@@ -5,9 +5,12 @@ import { CourseSpecializationService } from './course_spl.service';
 import { CourseSpecialization } from './course_spl.model';
 import { Category } from '../Category/category.model';
 import { Coursecategory } from '../Category/Coursecategory.model';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [SequelizeModule.forFeature([CourseSpecialization,Category,Coursecategory])],
+  imports: [SequelizeModule.forFeature([CourseSpecialization,Category,Coursecategory]),MulterModule.register({
+    dest:"\splFiles"
+  })],
   controllers: [CourseSpecializationController],
   providers: [CourseSpecializationService],
 })

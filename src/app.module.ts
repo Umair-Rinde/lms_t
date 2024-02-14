@@ -33,6 +33,7 @@ import { CategoryModule } from './Core/Category/category.module';
     CourseSpecializationModule,
     ResourceModule,
     CategoryModule,
+    
   ],
   controllers: [],
   providers: [],

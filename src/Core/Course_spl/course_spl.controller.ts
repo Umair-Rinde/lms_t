@@ -6,9 +6,12 @@ import {
   Body,
   Put,
   Delete,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { CourseSpecializationService } from './course_spl.service';
 import { CourseSpecialization } from './course_spl.model';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('course-specializations')
 export class CourseSpecializationController {
@@ -78,5 +81,14 @@ export class CourseSpecializationController {
       oldCategoryId,
       newCategoryId,
     );
+  }
+
+  @Post('upload-course')
+  @UseInterceptors(FilesInterceptor('courseFile'))
+  courseAdd(@UploadedFiles() courseFile:Express.Multer.File):object{
+    console.log(courseFile)
+    return{
+      message:"File uploaded sucessfully"
+    }
   }
 }
