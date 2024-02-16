@@ -24,5 +24,5 @@ export class Events extends Model{
     endDayTime:Date
 
     @Column(DataType.BOOLEAN)
-    isLive:boolean
+    isFeatured:boolean
 }
