@@ -8,6 +8,7 @@ import { CourseModule } from './Core/Course/course.module';
 import { CourseSpecializationModule } from './Core/Course_spl/course_spl.mdoule';
 import { ResourceModule } from './Core/Resources/resource.module';
 import { CategoryModule } from './Core/Category/category.module';
+import { EventModule } from './Core/Events/event.module';
 
 @Module({
   imports: [
@@ -29,10 +30,11 @@ import { CategoryModule } from './Core/Category/category.module';
     UniversityModule,
     CourseSpecializationModule,
     ResourceModule,
+    EventModule,
     CategoryModule,
-    
   ],
   controllers: [],
   providers: [],
+
 })
 export class AppModule {}

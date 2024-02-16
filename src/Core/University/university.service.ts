@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { University } from './university.model';
+import { CourseSpecialization } from '../course_spl/course_spl.model';
 
 @Injectable()
 export class UniversityService {
@@ -10,7 +11,7 @@ export class UniversityService {
   ) {}
 
   async findAll(): Promise<University[]> {
-    return this.universityModel.findAll();
+    return this.universityModel.findAll({include:[CourseSpecialization]});
   }
 
   async findById(id: string): Promise<University | null> {
