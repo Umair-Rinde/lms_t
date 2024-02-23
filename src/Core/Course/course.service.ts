@@ -14,7 +14,7 @@ export class CourseService {
     return this.courseModel.findAll({include:[Resource]})
   }
   async findAll(): Promise<Course[]> {
-    return this.courseModel.findAll();
+    return this.courseModel.findAll({include:Resource});
   }
 
   async findById(id: string): Promise<Course | null> {

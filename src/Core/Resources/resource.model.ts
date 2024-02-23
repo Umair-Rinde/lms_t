@@ -12,10 +12,5 @@ export class Resource extends Model {
   @Column
   is_published: boolean;
 
-  @ForeignKey(()=>Course)
-  courseId: string;
-
-  @BelongsTo(()=>Course)
-  Course:Course;
-
+ 
 }
